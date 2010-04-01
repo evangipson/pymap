@@ -111,6 +111,8 @@ def DrawMap(graph):
                 pygame.draw.rect(screen, (0,0,255), pixel)
                 
 graph = [[0 for col in range(n)]for row in range(n)]
+#list for keeping random numbers, for growth later
+list_random = []
 
 #get the dimensions for that first seed
 for i in range(m):
@@ -118,7 +120,7 @@ for i in range(m):
     y = random.randrange(2,n-1)
     print x, y
     graph[x][y] = 1
-    LandExpand(graph, n, x, y)
+    list_random.append([x,y])
 #call expansion once for whole graph
 #and use rules to expand land
 #RuleExpand2(graph, n)
@@ -143,7 +145,8 @@ def main():
             #show initial pixel >> island with spacebar interval
             if event.type == pygame.KEYUP:
                 if event.key == K_e:
-                    LandExpand(graph, n)
+                    for item in list_random:
+                        LandExpand(graph, n, item[0], item[1])
                     DrawMap(graph)
                 if event.key == K_SPACE:
                     RuleExpand(graph, n)
